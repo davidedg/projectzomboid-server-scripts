@@ -1,0 +1,20 @@
+#!/bin/bash
+
+SCRIPT_DIR=$( readlink -f $( dirname -- "$0" ) )
+source $SCRIPT_DIR/backup-online-s3
+
+
+mkdir -p $S3MOUNTPOINT
+mkdir -p $S3CACHEDIR
+
+s3fs $BUCKET $S3MOUNTPOINT \
+ -o endpoint=$REGION \
+ -o passwd_file=${HOME}/.passwd-s3fs \
+ -o use_cache=${S3CACHEDIR} \
+ -o del_cache \
+ -o connect_timeout=15 \
+ -o readwrite_timeout=30 \
+ -o list_object_max_keys=10000 \
+ -o url=https://$NAMESPACE.compat.objectstorage.$REGION.oraclecloud.com/ \
+ -onomultipart \
+ -o use_path_request_style

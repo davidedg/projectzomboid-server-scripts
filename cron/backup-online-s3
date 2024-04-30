@@ -1,0 +1,28 @@
+#!/bin/sh
+
+# This needs AWS S3 Compatibility enabled and configured for the tenancy and it might only work within your Home Region
+#
+# Create a bucket, e.g. "projectzomboid-backup" in your home region, take a note of the "Namespace" in the Bucket details
+# Create a user, assign only "Customer Secret Keys" capability
+# Create a Customer Secret Key for the user and write it down in a safe place
+# Create a group, e.g. "ProjectZomboid-S3" and assign the create user to it
+# Create an Identity Policy, e.g. "ProjectZomboid-S3" and assign these permissions (custom editor):
+# -> Allow group ProjectZomboid-S3 to read buckets in tenancy
+# -> Allow group ProjectZomboid-S3 to manage objects in tenancy where all {target.bucket.name='projectzomboid-backup', any {request.permission='OBJECT_CREATE', request.permission='OBJECT_INSPECT', request.permission='OBJECT_READ', request.permission='OBJECT_DELETE'}}
+#
+# Fill the variables below, pick a password for the restic repository
+
+
+
+export AWS_ACCESS_KEY_ID=0000000000000000000000000000000000000000
+export AWS_SECRET_ACCESS_KEY=00000000000000000000000000000000000000000000
+export NAMESPACE="abcde123ghjk"
+export REGION="eu-frankfurt-1"
+export BUCKET="my-backup-bucket-for-zomboid-server-1"
+export RESTIC_REPOSITORY="s3:$NAMESPACE.compat.objectstorage.$REGION.oraclecloud.com/$BUCKET"
+export RESTIC_PASSWORD="ProjectZomboid!"
+export RETENTION=20
+export RESTIC_MOUNTDIR=~/backup-mnt/online-s3
+export S3MOUNTPOINT=~/backup-mnt/s3-raw
+export S3CACHEDIR="$S3MOUNTPOINT-cache"
+

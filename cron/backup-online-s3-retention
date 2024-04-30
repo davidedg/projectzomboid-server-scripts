@@ -1,0 +1,6 @@
+#!/bin/sh
+
+SCRIPT_DIR=$( readlink -f $( dirname -- "$0" ) )
+. $SCRIPT_DIR/backup-online-s3
+
+~/bin/restic forget --prune --keep-last $RETENTION

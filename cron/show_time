@@ -1,0 +1,12 @@
+#!/bin/bash
+
+SCRIPT_DIR=$( readlink -f $( dirname -- "$0" ) )
+source $SCRIPT_DIR/00-globals
+
+
+IRLTIME=$(env TZ=$TIMEZONEDISPLAY date +'%H:%M')
+MSG="IRL Time: $(env TZ=$TIMEZONEDISPLAY date +'%H:%M')"
+
+SD="servermsg \"$MSG\""
+echo "n" | ~/$PZINSTANCE sd "$SD"
+

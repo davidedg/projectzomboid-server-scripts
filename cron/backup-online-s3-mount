@@ -1,0 +1,8 @@
+#!/bin/sh
+
+SCRIPT_DIR=$( readlink -f $( dirname -- "$0" ) )
+. $SCRIPT_DIR/backup-online-s3
+
+
+mkdir -p "$RESTIC_MOUNTDIR"
+~/bin/restic mount "$RESTIC_MOUNTDIR"

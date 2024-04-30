@@ -1,0 +1,21 @@
+#!/bin/bash
+
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+
+function connected_players() {
+if [ "$(command -v gamedig 2> /dev/null)" ] && [ "$(command -v jq 2> /dev/null)" ]; then
+  gamedigraw=$(gamedig --socketTimeout 1000 --type protocol-valve 127.0.0.1:16261)
+  err=$(echo "${gamedigraw}" | jq -M '.error | length')
+  if [[ $err -eq 0 ]]; then
+    echo -n "${gamedigraw}" | jq -re '.players | length'
+  else
+    echo -n "-1"
+  fi
+else
+  echo -n "-1"
+fi
+}

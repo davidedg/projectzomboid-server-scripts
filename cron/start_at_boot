@@ -1,0 +1,7 @@
+#!/bin/bash
+
+SCRIPT_DIR=$( readlink -f $( dirname -- "$0" ) )
+source $SCRIPT_DIR/00-globals
+
+sleep 10
+~/$PZINSTANCE start

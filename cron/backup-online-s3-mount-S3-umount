@@ -1,0 +1,10 @@
+#!/bin/bash
+
+SCRIPT_DIR=$( readlink -f $( dirname -- "$0" ) )
+source $SCRIPT_DIR/backup-online-s3
+
+
+S3MOUNTPOINT="$HOME/backup-mnt/s3-raw"
+S3CACHEDIR="$S3MOUNTPOINT-cache"
+
+umount $S3MOUNTPOINT
