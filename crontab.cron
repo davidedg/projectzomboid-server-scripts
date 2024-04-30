@@ -1,0 +1,21 @@
+## crontab -e
+
+# Start at boot
+#@reboot ~/pzserver monitor > /dev/null 2>&1
+#@rebot bash ~/cron/start_at_boot > /dev/null 2>&1
+
+# Auto restart on fail
+*/5    * * * * ~/pzserver monitor > /dev/null 2>&1
+
+# Live backup to local repo (repo must be initialized with the -init script first)
+15,35,55 * * * * CRON=1 bash ~/cron/backup-online-local-run > /dev/null 2>&1
+0        5 * * * bash ~/cron/backup-online-local-retention > /dev/null 2>&1
+
+
+###### to be done - works only manually atm
+# Live backup to CLOUD repo -- TBD: restic copy / migrate online to cloud tagged
+#!! 30   6,13,17,20 * * * CRON=1 ~/cron/backup-online-s3-run > /dev/null 2>&1
+#!! 10    5 * * * ~/cron/backup-online-s3-retention > /dev/null 2>&1
+
+# Show IRL Time to remind that you also have a real life...!
+*/10 * * * * ~/cron/show_time > /dev/null 2>&1
